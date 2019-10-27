@@ -1,0 +1,8 @@
+object Hola {
+       def main(args: Array[String]) {
+       	   var integral :Int = 10;
+           var myVar : String = "Can you read my mind?";
+           var variablebooleana :Boolean = false;
+           tegral = 2;
+       }
+}
