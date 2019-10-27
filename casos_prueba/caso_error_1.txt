@@ -1,0 +1,12 @@
+// lugar incorrecto
+//val number= 0
+object Error_1 {
+       def main(args: Array[String]) {
+       	   //Orden incorrecto 1
+           //var myVar : "Can you read my mind?" = String;
+           //Orden Incorrecto 2
+           integral var :Int = 10;
+           //Orden incorrecto 3
+           //var :variablebooleana Boolean = false;
+       }
+}

@@ -27,7 +27,7 @@ cnt
 	;
 // Estructuras de if y while
 expr
-	: IF condition keyblock (ELSE IF condition keyblock)* (ELSE keyblock)? 
+	: IF condition keyblock (ELSEIF condition keyblock)* (ELSE keyblock)? 
 	| WHILE condition keyblock
 	;
 // Condiciones de if y while
@@ -97,6 +97,7 @@ INT                : 'Int';
 BOOLEAN			   : 'Boolean';
 STRING			   : 'String';
 IF				   : 'if';
+ELSEIF			   : 'else if';
 ELSE			   : 'else';
 WHILE			   : 'while';
 FOR 			   : 'for';

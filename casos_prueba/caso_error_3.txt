@@ -1,0 +1,7 @@
+object Error_3 {
+       def main(args: Array[String]) {
+       	   while[number1>number2]{
+                  val y2 = 10;
+           }
+       }
+}

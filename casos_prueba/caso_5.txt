@@ -1,0 +1,5 @@
+object Hola {
+       def main(args: Array[String]) {
+           var myVar : String = "Can you read my mind?";
+       }
+}

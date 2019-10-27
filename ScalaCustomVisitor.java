@@ -35,36 +35,37 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	}
 
 	@Override public T visitObj(ScalaParser.ObjContext ctx) { 
+		//System.out.println("obj");
 		String id = ctx.ID().getText();
 		//System.out.println(id);
 		int n = symbol_table.size() - 1; 
-		System.out.println(n);
+		//System.out.println(n);
 		type_table.get(n).put(id,"obj");
 		//type_identifier.put(id,"obj");
 		return visitChildren(ctx);
 	}
 
 	@Override public T visitBody(ScalaParser.BodyContext ctx) { 
-		System.out.println("chupala 3");
+		//System.out.println("body");
 		return visitChildren(ctx); 
 	}
 
 	@Override public T visitDef(ScalaParser.DefContext ctx) { 
+		//System.out.println("def");
 		HashMap<String, String> type_level = new HashMap<String, String>();
 		HashMap<String, String> level = new HashMap<String, String>();
-		System.out.println("chupala 4");
 		String id = ctx.ID().getText();
 		//type_identifier.put(id,"def");
 		type_table.add(type_level);
 		symbol_table.add(level);
 		int n = symbol_table.size() - 1; 
-		System.out.println(n);
+		//System.out.println(n);
 		type_table.get(n).put(id,"def");
 		return visitChildren(ctx); 
 	}
 
 	@Override public T visitCnt(ScalaParser.CntContext ctx) { 
-		System.out.println("chupala 6");
+		//System.out.println("cnt");
 		return visitChildren(ctx); 
 	}
 	/**
@@ -74,9 +75,60 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitExpr(ScalaParser.ExprContext ctx) { 
-		HashMap<String, String> level = new HashMap<String, String>();
-		symbol_table.add(level);
-		return visitChildren(ctx); 
+		if(ctx.IF() != null){
+			//System.out.println("Expr if");
+			HashMap<String, String> type_level = new HashMap<String, String>();
+			HashMap<String, String> level = new HashMap<String, String>();
+			type_table.add(type_level);
+			symbol_table.add(level);
+			int n = symbol_table.size() - 1;
+			visitChildren(ctx);
+			//System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
+	    	//System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
+			symbol_table.remove(n);
+			type_table.remove(n);
+		}
+		if(ctx.ELSEIF() != null){
+			//System.out.println("Expr elseif");
+			HashMap<String, String> type_level_elseif = new HashMap<String, String>();
+			HashMap<String, String> level_elseif = new HashMap<String, String>();
+			type_table.add(type_level_elseif);
+			symbol_table.add(level_elseif);
+			int n = symbol_table.size() - 1; 
+			visitChildren(ctx);
+			//System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
+	    	//System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
+			symbol_table.remove(n);
+			type_table.remove(n);
+		}
+		if(ctx.ELSE() != null){
+			//System.out.println("Expr else");
+			HashMap<String, String> type_level_else = new HashMap<String, String>();
+			HashMap<String, String> level_else = new HashMap<String, String>();
+			type_table.add(type_level_else);
+			symbol_table.add(level_else);
+			int n = symbol_table.size() - 1; 
+			visitChildren(ctx);
+			//System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
+	    	//System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
+			symbol_table.remove(n);
+			type_table.remove(n);
+		}
+		if(ctx.WHILE() != null){
+			System.out.println("Expr while");
+			HashMap<String, String> type_level_while = new HashMap<String, String>();
+			HashMap<String, String> level_while = new HashMap<String, String>();
+			type_table.add(type_level_while);
+			symbol_table.add(level_while);
+			int n = symbol_table.size() - 1; 
+			visitChildren(ctx);
+			//System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
+	    	//System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
+			symbol_table.remove(n);
+			type_table.remove(n);
+		}
+		return null; 
+		//return visitChildren(ctx);
 	}
 	/**
 	 * {@inheritDoc}
@@ -92,7 +144,7 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitKeyblock(ScalaParser.KeyblockContext ctx) { 
-		System.out.println("chupala 5");
+		//System.out.println("Keyblock");
 		return visitChildren(ctx); 
 	}
 	/**
@@ -109,7 +161,7 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitVariables(ScalaParser.VariablesContext ctx) { 
-		System.out.println("chupala 7");
+		//System.out.println("variables");
 		return visitChildren(ctx); 
 	}
 	/**
@@ -119,14 +171,58 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitVal(ScalaParser.ValContext ctx) { 
-		System.out.println("chupala 8");
+		//System.out.println("val");
 		if(ctx.VAL() != null){
-
+			String id = ctx.ID().getText();
+			int n = symbol_table.size() - 1; 
+			//System.out.println(n);
+			//String tipo_dato = type_table.get(n).get(id);
+			int i=0,val_variable_true=0;
+			for(i=0;i<n;i++){
+				if(symbol_table.get(i).containsKey("val"+id)){
+					System.out.println("You cannot change a constant variable");
+					i=i+n;
+					val_variable_true=1;
+				}
+			}
+			if(val_variable_true==0){
+				type_table.get(n).put("val"+id,id);
+				if(ctx.INT() != null){
+					type_table.get(n).put(id,"Int");
+				}
+				if(ctx.STRING() != null){
+					type_table.get(n).put(id,"String");
+				}
+				if(ctx.BOOLEAN() != null){
+					type_table.get(n).put(id,"Boolean");
+				}
+				if(ctx.NEGATIVE() != null){
+					String neg = ctx.NEGATIVE().getText();
+					String num = ctx.NUMBER().getText();
+					symbol_table.get(n).put(id,neg+num);
+				}
+				else if (ctx.INT() != null){
+					String num = ctx.NUMBER().getText();
+					symbol_table.get(n).put(id,num);
+				}
+				else if (ctx.STRING() != null){
+					String ss = ctx.STRINGSTRUCT().getText();
+					symbol_table.get(n).put(id,ss);
+				}
+				else if (ctx.BOOLEAN() != null){
+					String b = ctx.BOOLEAN().getText();
+					symbol_table.get(n).put(id,b);
+				}
+				// Displaying the Hashtable 
+				//System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
+	    		//System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
+			}
+			
 		}
 		else{
 			String id = ctx.ID().getText();
 			int n = symbol_table.size() - 1; 
-			System.out.println(n);
+			//System.out.println(n);
 			String tipo_dato = type_table.get(n).get(id);
 			int i=0,val_variable_true=0,var_variable_true=0;
 			for(i=0;i<n;i++){
@@ -144,7 +240,7 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 				}
 			}
 			if(val_variable_true==0 && var_variable_true==1){
-				System.out.println("Entra aqui?");
+				//System.out.println("Entra a val");
 				String tipo="";
 				int j=0,k;
 				for(k=symbol_table.size() - 1; 0<=k;k--){
@@ -191,15 +287,16 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 				}
 			}
 			else{
-				System.out.println("La variable"+id+"no ha sido declarada");
+				System.out.println("La variable "+id+" no ha sido declarada");
 			}
 			// Displaying the Hashtable 
-			System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
-        	System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
+			//System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
+        	//System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
 		}
 		//String id = ctx.VAL().getText(); 
 		//System.out.println(id);
-		return visitChildren(ctx); 
+		//return visitChildren(ctx); 
+		return null;
 	}
 	/**
 	 * {@inheritDoc}
@@ -208,7 +305,7 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitVar(ScalaParser.VarContext ctx) {
-		System.out.println("chupala 9");
+		//System.out.println("var");
 		int n = symbol_table.size() - 1; 
 		//System.out.println(n);
 		if(ctx.VAR() != null){
@@ -246,12 +343,12 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 					symbol_table.get(n).put(id,b);
 				}
 				// Displaying the Hashtable 
-				System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
-        		System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
+				//System.out.println("Type table is: " + "nivel = " +n + " "+type_table.get(n));
+        		//System.out.println("Symbol table is: " + "nivel = " +n + " "+symbol_table.get(n));
 			}
 		}
-
-		return visitChildren(ctx); 
+		return null;
+		//return visitChildren(ctx); 
 	}
 
 	@Override public T visitComparison(ScalaParser.ComparisonContext ctx) { return visitChildren(ctx); }

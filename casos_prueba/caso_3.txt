@@ -1,0 +1,5 @@
+object ExampleVarDecAndAssin {
+       def main(args: Array[String]) {
+           var number:Int = -100;
+       }
+}
