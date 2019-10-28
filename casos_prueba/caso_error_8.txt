@@ -1,0 +1,11 @@
+object add {
+   def printName(): Unit = {
+	  var numberf:Int =20;
+   }
+   def main(args: Array[String]) {
+      var number1:Int =20;
+      var number2:Int =30;
+      val x:Int = 10;
+      metodosindeclarar();
+   }
+}

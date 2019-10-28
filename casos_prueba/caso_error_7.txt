@@ -3,6 +3,6 @@ object ciclo_condicional {
           var number1:Int =20;
           var number2:Int =30;
           val x:Int = 10;
-          x = 40;
+          var number2:Int =30;
     }
 }

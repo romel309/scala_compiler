@@ -55,13 +55,12 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 		HashMap<String, String> type_level = new HashMap<String, String>();
 		HashMap<String, String> level = new HashMap<String, String>();
 		String id = ctx.ID().getText();
-		//type_identifier.put(id,"def");
 		type_table.add(type_level);
 		symbol_table.add(level);
 		int n = symbol_table.size() - 1; 
-		//System.out.println(n);
+		//System.out.println(id);
 		type_table.get(n).put(id,"def");
-		return visitChildren(ctx); 
+		return visitChildren(ctx);
 	}
 
 	@Override public T visitCnt(ScalaParser.CntContext ctx) { 
@@ -74,6 +73,21 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	
+	@Override public T visitDefinition(ScalaParser.DefinitionContext ctx) { 
+		String id = ctx.ID().getText();
+		int n = symbol_table.size() - 1;
+		int j=0,k,bandera=0;
+		for(k=symbol_table.size() - 1; 0<=k;k--){
+			if(type_table.get(k).containsKey(id)){
+				bandera=1;
+			}
+		}
+		if(bandera==0){
+			System.out.println("El metodo "+id+"() no ha sido declarado");
+		}
+		return visitChildren(ctx); }
+
 	@Override public T visitExpr(ScalaParser.ExprContext ctx) { 
 		if(ctx.IF() != null){
 			//System.out.println("Expr if");

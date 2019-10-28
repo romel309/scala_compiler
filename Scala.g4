@@ -16,20 +16,20 @@ body
 	: def
 	| obj
 	;
-// Definition
-/*
-definition
-	: DEF ID LPARENTHESIS (variables|COMMA)+ RPARENTHESIS TWODOTS (INT|BOOLEAN|STRING) ASSIGN keyblock
-	;
-*/
 // Estructura de una definicion
 def 
-	: DEF ID LPARENTHESIS 'args' TWODOTS ARRAY RPARENTHESIS keyblock
+	: 	DEF ID LPARENTHESIS RPARENTHESIS TWODOTS UNIT ASSIGN keyblock
+	|	DEF ID LPARENTHESIS 'args' TWODOTS ARRAY RPARENTHESIS keyblock
 	;
 // contenido de una definicion
 cnt
 	: variables* SCOLON
 	| expr
+	| definition
+	;
+// Definition
+definition
+	: ID LPARENTHESIS RPARENTHESIS SCOLON
 	;
 // Estructuras de if y while
 expr
@@ -87,6 +87,7 @@ DEF 			   : 'def';
 VAR                : 'var' ;
 VAL 			   : 'val';
 INT                : 'Int';
+UNIT			   : 'Unit';
 BOOLEAN			   : 'Boolean';
 STRING			   : 'String';
 IF				   : 'if';

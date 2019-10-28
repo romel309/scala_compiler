@@ -40,6 +40,12 @@ public interface ScalaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCnt(ScalaParser.CntContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ScalaParser#definition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDefinition(ScalaParser.DefinitionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ScalaParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
