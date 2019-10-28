@@ -129,7 +129,7 @@ public class ScalaCustomVisitor<T> extends AbstractParseTreeVisitor<T> implement
 			type_table.remove(n);
 		}
 		if(ctx.WHILE() != null){
-			System.out.println("Expr while");
+			//System.out.println("Expr while");
 			HashMap<String, String> type_level_while = new HashMap<String, String>();
 			HashMap<String, String> level_while = new HashMap<String, String>();
 			type_table.add(type_level_while);
