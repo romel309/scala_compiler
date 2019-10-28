@@ -16,6 +16,12 @@ body
 	: def
 	| obj
 	;
+// Definition
+/*
+definition
+	: DEF ID LPARENTHESIS (variables|COMMA)+ RPARENTHESIS TWODOTS (INT|BOOLEAN|STRING) ASSIGN keyblock
+	;
+*/
 // Estructura de una definicion
 def 
 	: DEF ID LPARENTHESIS 'args' TWODOTS ARRAY RPARENTHESIS keyblock
@@ -48,19 +54,6 @@ variables
 	| var
 	;
 // Estructura constante val
-/*
-val 
-	: VAL? ID type
-	;
-var 
-	: VAR? ID type
-	;
-type
-	: (TWODOTS INT)? (ASSIGN NEGATIVE? NUMBER)?
-	| (TWODOTS STRING)? (ASSIGN STRINGSTRUCT)?
-	| (TWODOTS BOOLEAN)? (ASSIGN LOGIC)?
-	;
-*/
 val 
 	: VAL? ID (TWODOTS INT)? (ASSIGN NEGATIVE? NUMBER)?
 	| VAL? ID (TWODOTS STRING)? (ASSIGN STRINGSTRUCT)?

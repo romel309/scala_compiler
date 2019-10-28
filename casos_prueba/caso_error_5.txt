@@ -1,0 +1,6 @@
+object Caso_error_5 {
+       def main(args: Array[String]) {
+           var x :Boolean = false;
+           x = 23;
+       }
+}

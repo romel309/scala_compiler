@@ -1,0 +1,8 @@
+object ciclo_condicional {                                                               
+	def main(args: Array[String]) {
+          var number1:Int =20;
+          var number2:Int =30;
+          val x:Int = 10;
+          x = 40;
+    }
+}

@@ -1,5 +1,8 @@
-object ExampleVarDecAndAssin {
+object Hola {
        def main(args: Array[String]) {
-           val number:Int;
+       	   var integral :Int = 10;
+           var myVar : String = "Can you read my mind?";
+           integral = "gagaga";
+           var variablebooleana :Boolean = false;
        }
 }
